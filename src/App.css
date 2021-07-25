@@ -1,7 +1,12 @@
 .App {
   text-align: center;
 }
-
+.app {
+  display: flex;
+  flex-direction: column;
+  padding: 5rem;
+  margin: 2em;
+}
 .App-logo {
   height: 40vmin;
   pointer-events: none;

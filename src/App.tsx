@@ -1,26 +1,79 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useContext } from 'react';
+import { ADD, REMOVE_ALL, useToastContext } from './context/ToastState';
+import { Button } from '@material-ui/core';
+import "./App.css";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+export default function App() {
+  // @ts-ignore
+  const { toast, toastDispatch } = useToastContext();
+  function showClearAll() {
+    if (toast?.length) {
+      return (
+        <button
+          onClick={() =>
+            toastDispatch({
+              type: REMOVE_ALL
+            })
+          }
         >
-          Learn React
-        </a>
-      </header>
+          Clear all notifications
+        </button>
+      );
+    }
+  }
+
+  return (
+    <div className="app">
+      {/* Success Notification */}
+      <Button
+        onClick={() =>
+          toastDispatch({
+            type: ADD,
+            payload: {
+              content: 'Account Created!',
+              type: 'success'
+            }
+          })
+        }
+      >See Success Notification</Button>
+      {/* Error Notification */}
+      <Button
+        onClick={() =>
+          toastDispatch({
+            type: ADD,
+            payload: {
+              content: 'Invalid Credentials!',
+              type: 'error'
+            }
+          })
+        }
+      >See Error Notification</Button>
+      {/* Success Notification */}
+      <Button
+        onClick={() =>
+          toastDispatch({
+            type: ADD,
+            payload: {
+              content: 'Check Again!',
+              type: 'warning'
+            }
+          })
+        }
+      >See Warning Notification</Button>
+      {/* Success Notification */}
+      <Button
+        onClick={() =>
+          toastDispatch({
+            type: ADD,
+            payload: {
+              content: 'Account name is ---',
+              type: 'info'
+            }
+          })
+        }
+      >See Info Notification</Button>
+      {/* Clear All Notification */}
+      {showClearAll()}
     </div>
   );
 }
-
-export default App;
