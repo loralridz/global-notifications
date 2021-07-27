@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { ADD, REMOVE_ALL, useToastContext } from './context/ToastState';
 import { Button } from '@material-ui/core';
 import "./App.css";

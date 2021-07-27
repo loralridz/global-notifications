@@ -1,5 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { SnackbarProvider } from 'notistack';
+
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
@@ -7,9 +9,17 @@ import { ToastProvider } from "./context/ToastState";
 
 ReactDOM.render(
   <React.StrictMode>
-   <ToastProvider>
-      <App />
-    </ToastProvider>
+   <SnackbarProvider
+      maxSnack={6}
+      anchorOrigin={{
+        vertical: 'top',
+        horizontal: 'right',
+      }}
+    >
+      <ToastProvider>
+        <App />
+      </ToastProvider>
+    </SnackbarProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

@@ -1,7 +1,6 @@
 import { Color } from "@material-ui/lab/Alert";
-import React, { createContext, useReducer, useContext } from "react";
-import { createPortal } from "react-dom";
-import Toast from "../components/Toast";
+import React, { createContext, useReducer, useContext, useEffect } from "react";
+import { useSnackbar } from "notistack";
 
 export interface ToastInterface {
   id: any,
@@ -40,11 +39,18 @@ export const toastReducer = (state: any, action: any) => {
 export const ToastProvider = (props: any) => {
   const [toast, toastDispatch] = useReducer(toastReducer, initialState);
   const toastData = { toast, toastDispatch };
+
+  const recentToast: ToastInterface = toast[toast.length - 1];
+  const { enqueueSnackbar } = useSnackbar();
+  useEffect(() => {
+    if (recentToast)
+      enqueueSnackbar(recentToast.content, { variant: recentToast.type });
+  }, [enqueueSnackbar, recentToast]);
+
   return (
-    // @ts-ignore
     <ToastContext.Provider value={toastData}>
       {props.children}
-      {createPortal(<Toast toast={toast} />, document.body)}
+      {/* {createPortal(<Toast toast={toast} />, document.body)} */}
     </ToastContext.Provider>
   );
 };
